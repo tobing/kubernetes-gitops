@@ -53,4 +53,32 @@
    
       ```
    
-4. as
+4. Create key for git repo
+
+   ```
+   ssh-keygen -t ed25519 -f ~/.ssh/argocd-github -C "argocd-kubernetes-gitops"
+   ```
+
+   Copy content of public key
+   
+   ```
+   cat ~/.ssh/argocd-github.pub
+   ```
+6. Add it to GitHub
+
+   In your repo example ```tobing/kubernetes-gitops``` repository:
+   
+   Go to ```Settings → Deploy keys → Add deploy key```
+   
+   Set:
+   
+   **Title**: ArgoCD
+   
+   **Key**: paste the contents of argocd-github.pub
+   
+   **Allow write access**: OFF
+   
+   We only want ArgoCD to **read** Git.
+   
+   
+8. as
