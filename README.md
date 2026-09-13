@@ -1,34 +1,36 @@
-# kubernetes-gitops-lxc
+# Kubernetes GitOps with K3s and ArgoCD
+
+
+## Prerequisite
+- 1 VM for master node **k3s-master01** (2 vCPU, 8GB RAM, 30GB Storage)
+- 1 VM for worker node **k3s-worker01** (2 vCPU, 4GB RAM, 30GB Storage)
+- Both VM running Ubuntu Server (tested on v26.04)
+##
 
 1. On ```k3s-master01```
    
-    Install K3s master/control plane
-   
+    Install K3s master/control plane<br>
     ```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --disable servicelb" sh -s - --write-kubeconfig-mode 644```
 
-    Get K3s token for worker node installation
-
+    Get K3s token for worker node installation<br>
     ```cat /var/lib/rancher/k3s/server/node-token```
    
 2. On ```k3s-worker01```
-    Install K3s worker/agent
 
+   Install K3s worker/agent<br>
     ```curl -sfL https://get.k3s.io | K3S_URL=https://<mymasternode>:6443 K3S_TOKEN=<mymasternodetoken> sh -```
-
-   ```<mymasternode>``` is k3s-master01 IP Address or hostname
-
-   ```<mymasternodetoken>``` is the token from step 6
+   
+   ```<mymasternode>``` is k3s-master01 IP Address or hostname<br>
+   ```<mymasternodetoken>``` is the token from step 1
    
 3. Install ArgoCD to the cluster
 
      ```
      kubectl create namespace argocd     
      kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
      ```
 
-      Get secret from ArgoCD
-
+     Get secret from ArgoCD
      ```
      kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
      ```
@@ -40,28 +42,25 @@
 
 4. From you computer
 
-      Tunneling to ```k3s-master01_IP_ADDRESS``` with existing ```USERNAME``` 
-      
+      Tunneling to ```k3s-master01_IP_ADDRESS``` with existing ```USERNAME```       
       ```
       ssh -L 8081:127.0.0.1:8081 USERNAME@k3s-master01_IP_ADDRESS
       ```
-
-      Access ArgoCD Web UI
-
+      Access ArgoCD Web UI from web browser with user ```admin``` and secret from step 3
       ```
       https://127.0.0.1:8081
    
       ```
 
 > [!NOTE]
-> **Prepare your own repo as source of ArgoCD to deploy apps, you can fork this repo**
+> **Prepare your own repo as source of ArgoCD to deploy apps, you can clone this repo to your github account**
 
 <details>
   <summary>For Private Repo, You need to generate key</summary>
   
 
    
-4. Create key for git repo
+5. Create key for git repo
 
    ```
    ssh-keygen -t ed25519 -f ~/.ssh/argocd-github -C "argocd-kubernetes-gitops"
@@ -83,7 +82,7 @@
    We only want ArgoCD to **read** Git.<br/>
    
    
-8. From the machine where ```~/.ssh/argocd-github``` exists:
+7. From the machine where ```~/.ssh/argocd-github``` exists:
 
    ```
    kubectl create secret generic repo-kubernetes-gitops \
@@ -93,7 +92,7 @@
    --from-file=sshPrivateKey=$HOME/.ssh/argocd-github
    ```
   
-10. Then label it so ArgoCD recognizes it as a repository credential:
+8. Then label it so ArgoCD recognizes it as a repository credential:
 
       ```
       kubectl label secret repo-kubernetes-gitops \
@@ -103,9 +102,8 @@
   
 </details>
   
-12. Create a temporary file [`root-application.yaml`](root-application.yaml) then run ```kubectl apply -f root-application.yaml```<br/>
-    This is for ArgoCD initialization.<br>
-    The content of this file is the structure of the git repo. **CHECK CAREFULLY!!**
+9. Create a temporary file [`root-application.yaml`](root-application.yaml) then run ```kubectl apply -f root-application.yaml```<br/>
+⚠️ This is for ArgoCD initialization. The content of this file is the structure of the git repo. **CHECK CAREFULLY!!** ⚠️
 
 
-14. dsd
+10. dsd
