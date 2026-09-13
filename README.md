@@ -81,4 +81,23 @@
    We only want ArgoCD to **read** Git.
    
    
-8. as
+8. From the machine where ```~/.ssh/argocd-github``` exists:
+
+   ```
+   kubectl create secret generic repo-kubernetes-gitops \
+   -n argocd \
+   --from-literal=type=git \
+   --from-literal=url=git@github.com:tobing/kubernetes-gitops.git \
+   --from-file=sshPrivateKey=$HOME/.ssh/argocd-github
+   ```
+  
+10. Then label it so ArgoCD recognizes it as a repository credential:
+
+      ```
+      kubectl label secret repo-kubernetes-gitops \
+      -n argocd \
+      argocd.argoproj.io/secret-type=repository
+      ```
+
+  
+12. sds
