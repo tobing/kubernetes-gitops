@@ -87,5 +87,12 @@ Deploying K3s on lxc containers
 
    ```<mymasternodetoken>``` is the token from step 6
    
-8. 
-9. as
+8. Install ArgoCD
+  kubectl create namespace argocd
+  kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+  kubectl port-forward svc/argocd-server -n argocd 8081:443
+
+
+10. 
+11. as
