@@ -52,6 +52,14 @@
       https://127.0.0.1:8081
    
       ```
+
+> [!NOTE]
+> **Prepare your own repo as source of ArgoCD to deploy apps, you can fork this repo**
+
+<details>
+  <summary>For Private Repo, You need to generate key</summary>
+  
+
    
 4. Create key for git repo
 
@@ -92,9 +100,11 @@
       -n argocd \
       argocd.argoproj.io/secret-type=repository
       ```
-
   
-12. Create a temporary file ```root-application.yaml``` then run ```kubectl apply -f root-application.yaml```<br/>
+</details>
+  
+12. Create a temporary file [`root-application.yaml`](root-application.yaml) then run ```kubectl apply -f root-application.yaml```<br/>
+    This is for ArgoCD initialization.<br>
     The content of this file is the structure of the git repo. **CHECK CAREFULLY!!**
 
 
