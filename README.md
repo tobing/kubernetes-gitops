@@ -22,10 +22,10 @@ Deploying K3s on lxc containers
    ```nano /etc/pve/lxc/<lxc_container_id>.conf``` and append these configs
 
    ```
-    lxc.apparmor.profile: unconfined
-    lxc.cgroup.devices.allow: a
-    lxc.cap.drop:
-    lxc.mount.auto: "proc:rw sys:rw"
+   lxc.apparmor.profile: unconfined
+   lxc.cgroup.devices.allow: a
+   lxc.cap.drop:
+   lxc.mount.auto: "proc:rw sys:rw"
    ```
 
 5. For each container, modify ```/etc/rc.local```.
@@ -35,11 +35,11 @@ Deploying K3s on lxc containers
     If not exist ```nano /etc/rc.local``` and put these
 
     ```
-    #!/bin/sh -e
-    if [ ! -e /dev/kmsg ]; then
-        ln -s /dev/console /dev/kmsg
-    fi
-    mount --make-rshared /
+   #!/bin/sh -e
+   if [ ! -e /dev/kmsg ]; then
+       ln -s /dev/console /dev/kmsg
+   fi
+   mount --make-rshared /
     ```
  
     Change permission to executable  
