@@ -19,25 +19,38 @@
 
    ```<mymasternodetoken>``` is the token from step 6
    
-3. Install ArgoCD
+3. Install ArgoCD to the cluster
 
-  ```
-  kubectl create namespace argocd
-  
-  kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-  
-  kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
-  
-  kubectl port-forward svc/argocd-server -n argocd 8081:443
-  ```
+     ```
+     kubectl create namespace argocd     
+     kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+     ```
+
+      Get secret from ArgoCD
+
+     ```
+     kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+     ```
+
+     Port Forwarding for tunneling
+     ```
+     kubectl port-forward svc/argocd-server -n argocd 8081:443
+     ```
 
 4. From you computer
 
-   ```
-   ssh -L 8081:127.0.0.1:8081 USERNAME@k3s-master01_IP_ADDRESS
+      Tunneling to ```k3s-master01_IP_ADDRESS``` with existing ```USERNAME``` 
+      
+      ```
+      ssh -L 8081:127.0.0.1:8081 USERNAME@k3s-master01_IP_ADDRESS
+      ```
 
-   https://127.0.0.1:8081
+      Access ArgoCD Web UI
 
-   ```
+      ```
+      https://127.0.0.1:8081
    
-5. as
+      ```
+   
+4. as
