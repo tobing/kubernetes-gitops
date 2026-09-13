@@ -2,13 +2,29 @@
 Deploying K3s on lxc containers
 
  
-1. In Proxmox host, enable forwarding
+1. In Proxmox host
    
-    ```sudo sysctl -w net.ipv4.ip_forward=1```
-
-    **PERMANENT** 
-
-    ``` echo "net.ipv4.ip_forward = 1" > /etc/sysctl.d/99-ip-forward.conf``` 
+   Enable Forwarding
+   
+   ```sudo sysctl -w net.ipv4.ip_forward=1```
+ 
+   PERMANENT
+ 
+   ```echo "net.ipv4.ip_forward = 1" > /etc/sysctl.d/99-ip-forward.conf```
+ 
+   Enable kernel modules
+ 
+   ```
+   modprobe br_netfilter   
+   modprobe overlay
+   ```
+ 
+   PERMANENT
+ 
+   ```
+   echo "br_netfilter" | tee -a /etc/modules-load.d/modules.conf   
+   echo "overlay" | tee -a /etc/modules-load.d/modules.conf
+   ```
 
 
 2. Create lxc container with OPTION like this image, set hostname "k3s-master01"
