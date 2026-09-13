@@ -66,19 +66,13 @@
    ```
 6. Add it to GitHub
 
-   In your repo example ```tobing/kubernetes-gitops``` repository:
-   
-   Go to ```Settings → Deploy keys → Add deploy key```
-   
-   Set:
-   
-   **Title**: ArgoCD
-   
-   **Key**: paste the contents of argocd-github.pub
-   
-   **Allow write access**: OFF
-   
-   We only want ArgoCD to **read** Git.
+   In your repo example ```tobing/kubernetes-gitops``` repository:<br/>
+   Go to ```Settings → Deploy keys → Add deploy key```<br/>
+   Set:<br/>
+   **Title**: ArgoCD<br/>
+   **Key**: paste the contents of argocd-github.pub<br/>
+   **Allow write access**: OFF<br/>
+   We only want ArgoCD to **read** Git.<br/>
    
    
 8. From the machine where ```~/.ssh/argocd-github``` exists:
@@ -100,4 +94,8 @@
       ```
 
   
-12. sds
+12. Create a temporary file ```root-application.yaml``` then run ```kubectl apply -f root-application.yaml```<br/>
+    The content of this file is the structure of the git repo. **CHECK CAREFULLY!!**
+
+
+14. dsd
