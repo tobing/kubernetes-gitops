@@ -103,7 +103,7 @@
 </details>
   
 9. Create a temporary file [`root-application.yaml`](root-application.yaml) then run ```kubectl apply -f root-application.yaml```<br/>
-⚠️ This is for ArgoCD initialization. The content of this file is the structure of the git repo. **CHECK CAREFULLY!!** ⚠️
+⚠️ This is for ArgoCD initialization. <br> The content of this file is the structure of the git repo. **CHECK CAREFULLY!!**
 
 
 10. dsd
