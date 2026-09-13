@@ -50,7 +50,7 @@ Deploying K3s on lxc containers
   
     Run apt update and install curl then reboot the containers
    
-    ```apt update && apt upgrade –y && apt install curl –y && reboot```
+    ```apt update && apt upgrade -y && apt install curl -y && reboot```
 
 6. On ```k3s-master01```
    
