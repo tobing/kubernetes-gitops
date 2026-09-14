@@ -30,7 +30,8 @@
    ```
 
 3. Create lxc container with OPTION like this image, set hostname to "**k3s-master01**"
-    <img width="696" height="469" alt="image" src="https://github.com/user-attachments/assets/c49996b7-092a-4ed2-a2c7-9ca729d13da1" />
+    <img width="481" height="445" alt="image" src="https://github.com/user-attachments/assets/200e7b54-35fd-49dd-9521-efe4d2176183" />
+
 
 4. Create another lxc container same as above but set RAM 2GB and hostname "**k3s-worker01**"
 5. In Proxmox host, for each container modify value of ```/etc/pve/lxc/<lxc_container_id>.conf```
@@ -66,7 +67,7 @@
     ```apt update && apt upgrade -y && apt install curl -y && reboot```
 
 
-7. On ```k3s-master01```
+7. In ```k3s-master01```
    
     Install K3s master/control plane<br>
     ```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable servicelb" sh -s - --write-kubeconfig-mode 644```
@@ -86,7 +87,7 @@
     Get K3s token for worker node installation<br>
     ```cat /var/lib/rancher/k3s/server/node-token```
    
-8. On ```k3s-worker01```
+8. In ```k3s-worker01```
 
    Install K3s worker/agent<br>
     ```curl -sfL https://get.k3s.io | K3S_URL=https://<mymasternode>:6443 K3S_TOKEN=<mymasternodetoken> sh -```
@@ -131,7 +132,7 @@
   
 
    
-11. On ```k3s-master01``` create key for git repo
+11. In ```k3s-master01``` create key for git repo
 
    ```
    ssh-keygen -t ed25519 -f ~/.ssh/argocd-github -C "argocd-kubernetes-gitops"
@@ -177,4 +178,10 @@
 ⚠️ This is for ArgoCD initialization. <br> The content of this file is the structure of the git repo. **CHECK CAREFULLY!!**
 
 
-16. Check [`infrastructure/metallb/config/ipaddresspool.yaml`](infrastructure/metallb/config/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your network
+16. Check [`infrastructure/metallb/config/ipaddresspool.yaml`](infrastructure/metallb/config/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your network.
+17. When you change the pool and git push, ArgoCD will not start the sync because<br>
+    ```argocd.argoproj.io/sync-wave: "0"``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) and <br>
+    ```argocd.argoproj.io/sync-wave: "1"``` in [`infrastructure/metallb/config/application.yaml`](infrastructure/metallb/config/application.yaml) <br>
+    We do this so config like "IP Addess Pool" did not triggered before main metallb provisioned.
+19. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
+    After git push, ArgoCD will syncing.
