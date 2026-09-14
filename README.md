@@ -197,3 +197,46 @@ kubernetes-gitops/
 15. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your network.
 16. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
     After git push, ArgoCD will syncing.
+
+
+<br><br>
+
+> [!NOTE]
+> **Longhorn - Distributed Storage**
+
+<details>
+
+17. In Proxmox host. enable iSCSI module
+
+    ```
+    modprobe iscsi_tcp
+    
+    #check
+    lsmod | grep iscsi
+    ```
+
+    **PERMANENT**
+    
+    ```
+    echo iscsi_tcp | tee /etc/modules-load.d/iscsi.conf
+
+    #check
+    cat /etc/modules-load.d/iscsi.conf
+    ```
+    
+
+18. Install Longhorn
+
+    ```
+    helm repo add longhorn https://charts.longhorn.io
+    helm repo update
+    ```
+
+19. Install iSCSI in both ```k3s-master01``` and ```k3s-worker01```
+
+    ```
+    apt update
+    apt install -y open-iscsi
+    ```
+
+</details>
