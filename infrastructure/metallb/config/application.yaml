@@ -4,7 +4,7 @@ metadata:
   name: metallb-config
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1" # Configs should start after main application
+    argocd.argoproj.io/sync-wave: "1" # infrastructure/metallb/config will not start if no change in parent application
 spec:
   project: default
 
