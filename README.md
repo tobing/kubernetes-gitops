@@ -1,7 +1,7 @@
-# Kubernetes GitOps with K3s, ArgoCD and LXC container
+## Kubernetes GitOps with K3s, ArgoCD and LXC container
 
 
-## Prerequisite
+### Prerequisite
 - 1 LXC container for master node **k3s-master01** (2 vCPU, 4GB RAM, 20GB Storage)
 - 1 LXC container for worker node **k3s-worker01** (2 vCPU, 2GB RAM, 20GB Storage)
 - Both containers running Ubuntu Server (tested on v26.04)
@@ -75,7 +75,7 @@
     ```
    systemctl status k3s
     ```
-    It will showing k3s service active but running k3s inside lxc container will show these errors
+    It will show k3s service active but running k3s inside lxc container will show these errors
    ```
    ExecStartPre=/sbin/modprobe br_netfilter (code=exited, status=1/FAILURE)
    ExecStartPre=/sbin/modprobe overlay (code=exited, status=1/FAILURE)
