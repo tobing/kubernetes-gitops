@@ -111,7 +111,7 @@ kubernetes-gitops/
    ```<mymasternode>``` is k3s-master01 IP Address or hostname<br>
    ```<mymasternodetoken>``` is the token from step 1
    
-8. Install ArgoCD to the cluster
+8. From ```k3s-master01``` install ArgoCD to the cluster
 
      ```
      kubectl create namespace argocd     
@@ -134,7 +134,7 @@ kubernetes-gitops/
       ```
       ssh -L 8081:127.0.0.1:8081 USERNAME@k3s-master01_IP_ADDRESS
       ```
-      Access ArgoCD Web UI from web browser with user ```admin``` and secret from step 3
+      Access ArgoCD Web UI from web browser with user ```admin``` and secret from step 8
       ```
       https://127.0.0.1:8081
    
