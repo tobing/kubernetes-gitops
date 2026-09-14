@@ -18,9 +18,9 @@ kubernetes-gitops/
 
 ### Environments
 - 1 LXC container for master node **k3s-master01** <br>
-  (2 vCPU, 4GB, no swap, 20GB Storage) - IP Addr 192.168.31.4 (or set same as your home network)
+  (2 vCPU, 4GB, no swap, 20GB Storage) - IP Addr 192.168.31.4 (set same as your local subnet)
 - 1 LXC container for worker node **k3s-worker01** <br>
-  (2 vCPU, 2GB, no swap, 20GB Storage) - IP Addr 192.168.31.5 (or set same as your home network)
+  (2 vCPU, 2GB, no swap, 20GB Storage) - IP Addr 192.168.31.5 (set same as your local subnet)
 - Both containers running Ubuntu Server (tested on v26.04)
   
 🎈 if using VM instead of lxc container, go directly to step 6.
@@ -188,15 +188,16 @@ kubernetes-gitops/
   
 </details>
   
-14. Create a temporary file [`root-application.yaml`](root-application.yaml) ⚠️ This is for ArgoCD initialization.<br/>
-    Modify ```repoURL``` according to your git repo. **CHECK CAREFULLY!!**<br/>
+14. Create a temporary file [`root-application.yaml`](root-application.yaml) ⚠️ This file for ArgoCD initialization.<br/>
+    Modify ```repoURL``` according to your git repo. $\color{red}{\text{CHECK CAREFULLY}}$ <br/>
     Run ```kubectl apply -f root-application.yaml```<br/>
 
 
-15. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your network.
+15. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your local subnet.
 16. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
     After git push, ArgoCD will syncing.
 
+    🎉 $\color{red}{\text{You have implemented GitOps by using your git repo as source of truth}}$ 🎉
 
 <br><br>
 
