@@ -128,7 +128,7 @@
 > **Prepare your own repo as source of ArgoCD to deploy apps, you can clone this repo to your github account**
 
 <details>
-  <summary>For Private Repo, You need to generate key</summary>
+  <summary><h3>For Private Repo, You need to generate key</h3></summary>
   
 
    
