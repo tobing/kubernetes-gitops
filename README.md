@@ -131,7 +131,7 @@
   
 
    
-11. Create key for git repo
+11. On ```k3s-master01``` create key for git repo
 
    ```
    ssh-keygen -t ed25519 -f ~/.ssh/argocd-github -C "argocd-kubernetes-gitops"
@@ -153,7 +153,7 @@
    We only want ArgoCD to **read** Git.<br/>
    
    
-13. From the machine where ```~/.ssh/argocd-github``` exists:
+13. From ```k3s-master01`` create secret:
 
    ```
    kubectl create secret generic repo-kubernetes-gitops \
