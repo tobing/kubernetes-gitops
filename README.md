@@ -177,4 +177,4 @@
 ⚠️ This is for ArgoCD initialization. <br> The content of this file is the structure of the git repo. **CHECK CAREFULLY!!**
 
 
-16. dsd
+16. Check [`infrastructure/metallb/config/ipaddresspool.yaml`](infrastructure/metallb/config/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your network
