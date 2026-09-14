@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: metallb
+  name: metallb-config
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "0" #This should start first before any configs
+    argocd.argoproj.io/sync-wave: "1" # Configs should start after main application
 spec:
   project: default
 
   source:
-    repoURL: https://metallb.github.io/metallb
-    chart: metallb
-    targetRevision: 0.16.1
+    repoURL: git@github.com:tobing/kubernetes-gitops.git
+    targetRevision: HEAD
+    path: infrastructure/metallb/config
 
   destination:
     server: https://kubernetes.default.svc
@@ -21,5 +21,3 @@ spec:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
