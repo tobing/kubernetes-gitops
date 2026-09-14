@@ -17,9 +17,10 @@ kubernetes-gitops/
 ```
 
 ### Prerequisite
-- 1 LXC container for master node **k3s-master01** (2 vCPU, 4GB RAM, 20GB Storage)
-- 1 LXC container for worker node **k3s-worker01** (2 vCPU, 2GB RAM, 20GB Storage)
+- 1 LXC container for master node **k3s-master01** (2 vCPU, 4GB RAM, 20GB Storage) - IP Addr eg: 192.168.31.4
+- 1 LXC container for worker node **k3s-worker01** (2 vCPU, 2GB RAM, 20GB Storage) - IP Addr eg: 192.168.31.5
 - Both containers running Ubuntu Server (tested on v26.04)
+- Basic Linux & Kubernetes knowledge
   
 🎈 if using VM instead of lxc container, go directly to step 6.
 ##
@@ -206,7 +207,7 @@ kubernetes-gitops/
 
 <details>
 
-17. In Proxmox host. enable iSCSI module
+17. In Proxmox host enable iSCSI module
 
     ```
     modprobe iscsi_tcp
@@ -225,14 +226,25 @@ kubernetes-gitops/
     ```
     
 
-18. Install Longhorn
+18. Install helm chart binary & Longhorn from ```k3s-master01```
+
+    Get the lastest version of helm from ```https://github.com/helm/helm/releases```
+
+    ```
+    wget https://get.helm.sh/helm-vX.X.X-linux-386.tar.gz
+    tar -xzvf helm-vX.X.X-linux-386.tar.gz
+    cd linux-386
+    cp helm /usr/local/bin    
+    ```
+
+    Install Longhorn
 
     ```
     helm repo add longhorn https://charts.longhorn.io
     helm repo update
     ```
 
-19. Install iSCSI in both ```k3s-master01``` and ```k3s-worker01```
+20. Install iSCSI in both ```k3s-master01``` and ```k3s-worker01```
 
     ```
     apt update
