@@ -1,10 +1,12 @@
-# Kubernetes GitOps with K3s and ArgoCD
+# Kubernetes GitOps with K3s, ArgoCD and LXC container
 
 
 ## Prerequisite
 - 1 LXC container for master node **k3s-master01** (2 vCPU, 4GB RAM, 20GB Storage)
 - 1 LXC container for worker node **k3s-worker01** (2 vCPU, 2GB RAM, 20GB Storage)
 - Both containers running Ubuntu Server (tested on v26.04)
+  
+🎈 if using VM instead of lxc container, go directly to step 6.
 ##
 
 
@@ -73,12 +75,13 @@
     ```
    systemctl status k3s
     ```
-    It will showing k3s service active but with these error
+    It will showing k3s service active but running k3s inside lxc container will show these errors
    ```
    ExecStartPre=/sbin/modprobe br_netfilter (code=exited, status=1/FAILURE)
    ExecStartPre=/sbin/modprobe overlay (code=exited, status=1/FAILURE)
    ```
-   As expected, lxc container using host's kernel so cannot run modprobe to load kernel modules (Step 1: check Proxmox host loaded the modules) 
+   As expected, lxc container using host's kernel so cannot run modprobe to load kernel modules<br>
+   (Step 1: check Proxmox host loaded the modules) 
 
     Get K3s token for worker node installation<br>
     ```cat /var/lib/rancher/k3s/server/node-token```
