@@ -12,7 +12,6 @@ kubernetes-gitops/
 │
 └── infrastructure-config/
     └── metallb/
-        ├── application.yaml
         ├── ipaddresspool.yaml
         └── l2advertisement.yaml
 ```
