@@ -195,9 +195,5 @@ kubernetes-gitops/
 
 
 15. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your network.
-16. When you change the pool and git push, ArgoCD will not start the sync because<br>
-    ```argocd.argoproj.io/sync-wave: "0"``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) and <br>
-    ```argocd.argoproj.io/sync-wave: "1"``` in [`infrastructure/metallb/config/application.yaml`](infrastructure/metallb/config/application.yaml) <br>
-    We do this so config like "IP Addess Pool" did not triggered before main metallb provisioned.
-17. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
+16. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
     After git push, ArgoCD will syncing.
