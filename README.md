@@ -16,11 +16,12 @@ kubernetes-gitops/
         └── l2advertisement.yaml
 ```
 
-### Prerequisite
-- 1 LXC container for master node **k3s-master01** (2 vCPU, 4GB, 20GB Storage) - IP Addr eg: 192.168.31.4
-- 1 LXC container for worker node **k3s-worker01** (2 vCPU, 2GB, 20GB Storage) - IP Addr eg: 192.168.31.5
+### Environments
+- 1 LXC container for master node **k3s-master01** <br>
+  (2 vCPU, 4GB, no swap, 20GB Storage) - IP Addr 192.168.31.4 (or set same as your home network)
+- 1 LXC container for worker node **k3s-worker01** <br>
+  (2 vCPU, 2GB, no swap, 20GB Storage) - IP Addr 192.168.31.5 (or set same as your home network)
 - Both containers running Ubuntu Server (tested on v26.04)
-- Basic Linux & Kubernetes knowledge
   
 🎈 if using VM instead of lxc container, go directly to step 6.
 ##
@@ -85,7 +86,7 @@ kubernetes-gitops/
 
 6. In ```k3s-master01```
    
-    Install K3s master/control plane<br>
+    Install K3s master/control plane without servicelb. We will replace it with Metal LB<br>
     ```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable servicelb" sh -s - --write-kubeconfig-mode 644```
 
     Verify with
@@ -139,14 +140,10 @@ kubernetes-gitops/
       https://127.0.0.1:8081
    
       ```
-
 > [!NOTE]
 > **Prepare your own repo as source of ArgoCD to deploy apps, you can clone this repo to your github account**
-
 <details>
   <summary><h3>For Private Repo, You need to generate key</h3></summary>
-  
-
    
 10. In ```k3s-master01``` create key for git repo
 
@@ -191,8 +188,9 @@ kubernetes-gitops/
   
 </details>
   
-14. Create a temporary file [`root-application.yaml`](root-application.yaml) then run ```kubectl apply -f root-application.yaml```<br/>
-⚠️ This is for ArgoCD initialization. <br> The content of this file is the structure of the git repo. **CHECK CAREFULLY!!**
+14. Create a temporary file [`root-application.yaml`](root-application.yaml) ⚠️ This is for ArgoCD initialization.<br/>
+    Modify ```repoURL``` according to your git repo. **CHECK CAREFULLY!!**<br/>
+    Run ```kubectl apply -f root-application.yaml```<br/>
 
 
 15. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your network.
@@ -203,7 +201,7 @@ kubernetes-gitops/
 <br><br>
 
 > [!NOTE]
-> **Longhorn - Distributed Storage**
+> **Longhorn - Distributed Block Storage**
 
 <details>
 
@@ -244,7 +242,7 @@ kubernetes-gitops/
     helm repo update
     ```
 
-20. Install iSCSI in both ```k3s-master01``` and ```k3s-worker01```
+19. Install iSCSI in both ```k3s-master01``` and ```k3s-worker01```
 
     ```
     apt update
