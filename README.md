@@ -29,12 +29,12 @@
    CONFIG_BRIDGE_NETFILTER=y
    ```
 
-3. Create lxc container with OPTION like this image, set hostname to "**k3s-master01**"
+2. Create lxc container with OPTION like this image, set hostname to "**k3s-master01**"
     <img width="481" height="445" alt="image" src="https://github.com/user-attachments/assets/200e7b54-35fd-49dd-9521-efe4d2176183" />
 
 
-4. Create another lxc container same as above but set RAM 2GB and hostname "**k3s-worker01**"
-5. In Proxmox host, for each container modify value of ```/etc/pve/lxc/<lxc_container_id>.conf```
+3. Create another lxc container same as above but set RAM 2GB and hostname "**k3s-worker01**"
+4. In Proxmox host, for each container modify value of ```/etc/pve/lxc/<lxc_container_id>.conf```
    
    ```nano /etc/pve/lxc/<lxc_container_id>.conf``` and append these configs
 
@@ -45,7 +45,7 @@
    lxc.mount.auto: "proc:rw sys:rw"
    ```
 
-6. For each container, modify ```/etc/rc.local```.
+5. For each container, modify ```/etc/rc.local```.
 
     Check if file exist ```ls –al /etc/rc.local```  
 
@@ -67,7 +67,7 @@
     ```apt update && apt upgrade -y && apt install curl -y && reboot```
 
 
-7. In ```k3s-master01```
+6. In ```k3s-master01```
    
     Install K3s master/control plane<br>
     ```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable servicelb" sh -s - --write-kubeconfig-mode 644```
@@ -87,7 +87,7 @@
     Get K3s token for worker node installation<br>
     ```cat /var/lib/rancher/k3s/server/node-token```
    
-8. In ```k3s-worker01```
+7. In ```k3s-worker01```
 
    Install K3s worker/agent<br>
     ```curl -sfL https://get.k3s.io | K3S_URL=https://<mymasternode>:6443 K3S_TOKEN=<mymasternodetoken> sh -```
@@ -95,7 +95,7 @@
    ```<mymasternode>``` is k3s-master01 IP Address or hostname<br>
    ```<mymasternodetoken>``` is the token from step 1
    
-9. Install ArgoCD to the cluster
+8. Install ArgoCD to the cluster
 
      ```
      kubectl create namespace argocd     
@@ -112,7 +112,7 @@
      kubectl port-forward svc/argocd-server -n argocd 8081:443
      ```
 
-10. From you computer
+9. From you computer
 
       Tunneling to ```k3s-master01_IP_ADDRESS``` with existing ```USERNAME```       
       ```
@@ -132,7 +132,7 @@
   
 
    
-11. In ```k3s-master01``` create key for git repo
+10. In ```k3s-master01``` create key for git repo
 
    ```
    ssh-keygen -t ed25519 -f ~/.ssh/argocd-github -C "argocd-kubernetes-gitops"
@@ -143,7 +143,7 @@
    ```
    cat ~/.ssh/argocd-github.pub
    ```
-12. Add it to GitHub
+11. Add it to GitHub
 
    In your repo example ```tobing/kubernetes-gitops``` repository:<br/>
    Go to ```Settings → Deploy keys → Add deploy key```<br/>
@@ -154,7 +154,7 @@
    We only want ArgoCD to **read** Git.<br/>
    
    
-13. From ```k3s-master01`` create secret:
+12. From ```k3s-master01`` create secret:
 
    ```
    kubectl create secret generic repo-kubernetes-gitops \
@@ -164,7 +164,7 @@
    --from-file=sshPrivateKey=$HOME/.ssh/argocd-github
    ```
   
-14. Then label it so ArgoCD recognizes it as a repository credential:
+13. Then label it so ArgoCD recognizes it as a repository credential:
 
       ```
       kubectl label secret repo-kubernetes-gitops \
@@ -174,14 +174,14 @@
   
 </details>
   
-15. Create a temporary file [`root-application.yaml`](root-application.yaml) then run ```kubectl apply -f root-application.yaml```<br/>
+14. Create a temporary file [`root-application.yaml`](root-application.yaml) then run ```kubectl apply -f root-application.yaml```<br/>
 ⚠️ This is for ArgoCD initialization. <br> The content of this file is the structure of the git repo. **CHECK CAREFULLY!!**
 
 
-16. Check [`infrastructure/metallb/config/ipaddresspool.yaml`](infrastructure/metallb/config/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your network.
-17. When you change the pool and git push, ArgoCD will not start the sync because<br>
+15. Check [`infrastructure/metallb/config/ipaddresspool.yaml`](infrastructure/metallb/config/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your network.
+16. When you change the pool and git push, ArgoCD will not start the sync because<br>
     ```argocd.argoproj.io/sync-wave: "0"``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) and <br>
     ```argocd.argoproj.io/sync-wave: "1"``` in [`infrastructure/metallb/config/application.yaml`](infrastructure/metallb/config/application.yaml) <br>
     We do this so config like "IP Addess Pool" did not triggered before main metallb provisioned.
-19. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
+17. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
     After git push, ArgoCD will syncing.
