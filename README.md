@@ -142,7 +142,8 @@
      
      ```
      cat ~/.ssh/argocd-github.pub
-   ```
+     ```
+
 11. Add it to GitHub
 
      In your repo example ```tobing/kubernetes-gitops``` repository:<br/>
