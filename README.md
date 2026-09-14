@@ -194,7 +194,7 @@ kubernetes-gitops/
 ⚠️ This is for ArgoCD initialization. <br> The content of this file is the structure of the git repo. **CHECK CAREFULLY!!**
 
 
-15. Check [`infrastructure/metallb/config/ipaddresspool.yaml`](infrastructure/metallb/config/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your network.
+15. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your network.
 16. When you change the pool and git push, ArgoCD will not start the sync because<br>
     ```argocd.argoproj.io/sync-wave: "0"``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) and <br>
     ```argocd.argoproj.io/sync-wave: "1"``` in [`infrastructure/metallb/config/application.yaml`](infrastructure/metallb/config/application.yaml) <br>
