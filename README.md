@@ -134,35 +134,35 @@
    
 10. In ```k3s-master01``` create key for git repo
 
-   ```
-   ssh-keygen -t ed25519 -f ~/.ssh/argocd-github -C "argocd-kubernetes-gitops"
-   ```
-
-   Copy content of public key
-   
-   ```
-   cat ~/.ssh/argocd-github.pub
+     ```
+     ssh-keygen -t ed25519 -f ~/.ssh/argocd-github -C "argocd-kubernetes-gitops"
+     ```
+  
+     Copy content of public key
+     
+     ```
+     cat ~/.ssh/argocd-github.pub
    ```
 11. Add it to GitHub
 
-   In your repo example ```tobing/kubernetes-gitops``` repository:<br/>
-   Go to ```Settings → Deploy keys → Add deploy key```<br/>
-   Set:<br/>
-   **Title**: ArgoCD<br/>
-   **Key**: paste the contents of argocd-github.pub<br/>
-   **Allow write access**: OFF<br/>
-   We only want ArgoCD to **read** Git.<br/>
+     In your repo example ```tobing/kubernetes-gitops``` repository:<br/>
+     Go to ```Settings → Deploy keys → Add deploy key```<br/>
+     Set:<br/>
+     **Title**: ArgoCD<br/>
+     **Key**: paste the contents of argocd-github.pub<br/>
+     **Allow write access**: OFF<br/>
+     We only want ArgoCD to **read** Git.<br/>
    
    
 12. From ```k3s-master01`` create secret:
 
-   ```
-   kubectl create secret generic repo-kubernetes-gitops \
-   -n argocd \
-   --from-literal=type=git \
-   --from-literal=url=git@github.com:tobing/kubernetes-gitops.git \
-   --from-file=sshPrivateKey=$HOME/.ssh/argocd-github
-   ```
+     ```
+     kubectl create secret generic repo-kubernetes-gitops \
+     -n argocd \
+     --from-literal=type=git \
+     --from-literal=url=git@github.com:tobing/kubernetes-gitops.git \
+     --from-file=sshPrivateKey=$HOME/.ssh/argocd-github
+     ```
   
 13. Then label it so ArgoCD recognizes it as a repository credential:
 
