@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: metallb
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "0" #This should start first before any configs to prevent config like ip address pool deployed before main metallb deployed
 spec:
   project: default
 
