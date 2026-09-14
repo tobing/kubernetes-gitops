@@ -3,7 +3,7 @@
 
 ## Prerequisite
 - 1 LXC container for master node **k3s-master01** (2 vCPU, 4GB RAM, 20GB Storage)
-- 1 LXC container worker node **k3s-worker01** (2 vCPU, 2GB RAM, 30GB Storage)
+- 1 LXC container worker node **k3s-worker01** (2 vCPU, 2GB RAM, 20GB Storage)
 - Both containers running Ubuntu Server (tested on v26.04)
 ##
 
