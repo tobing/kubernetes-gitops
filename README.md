@@ -11,7 +11,7 @@
 1. In Proxmox host
    
    Enable forwarding<br>
-   ```sudo sysctl -w net.ipv4.ip_forward=1```
+   ```sysctl -w net.ipv4.ip_forward=1```
 
     **PERMANENT** 
 
@@ -27,7 +27,7 @@
    CONFIG_BRIDGE_NETFILTER=y
    ```
 
-3. Create lxc container with OPTION like this image, set hostname "**k3s-master01**"
+3. Create lxc container with OPTION like this image, set hostname to "**k3s-master01**"
     <img width="696" height="469" alt="image" src="https://github.com/user-attachments/assets/c49996b7-092a-4ed2-a2c7-9ca729d13da1" />
 
 4. Create another lxc container same as above but set RAM 2GB and hostname "**k3s-worker01**"
@@ -61,13 +61,13 @@
   
     Run apt update and install curl then reboot the containers
    
-    ```apt update && apt upgrade –y && apt install curl –y && reboot```
+    ```apt update && apt upgrade -y && apt install curl -y && reboot```
 
 
 7. On ```k3s-master01```
    
     Install K3s master/control plane<br>
-    ```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --disable servicelb" sh -s - --write-kubeconfig-mode 644```
+    ```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable servicelb" sh -s - --write-kubeconfig-mode 644```
 
     Verify with
     ```
@@ -78,7 +78,7 @@
    ExecStartPre=/sbin/modprobe br_netfilter (code=exited, status=1/FAILURE)
    ExecStartPre=/sbin/modprobe overlay (code=exited, status=1/FAILURE)
    ```
-   As expected, lxc container using host's kernel. Cannot run modprobe to load kernel modules (Step 1) 
+   As expected, lxc container using host's kernel so cannot run modprobe to load kernel modules (Step 1: check Proxmox host loaded the modules) 
 
     Get K3s token for worker node installation<br>
     ```cat /var/lib/rancher/k3s/server/node-token```
