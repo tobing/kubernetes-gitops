@@ -17,8 +17,8 @@ kubernetes-gitops/
 ```
 
 ### Prerequisite
-- 1 LXC container for master node **k3s-master01** (2 vCPU, 4GB RAM, 20GB Storage) - IP Addr eg: 192.168.31.4
-- 1 LXC container for worker node **k3s-worker01** (2 vCPU, 2GB RAM, 20GB Storage) - IP Addr eg: 192.168.31.5
+- 1 LXC container for master node **k3s-master01** (2 vCPU, 4GB, 20GB Storage) - IP Addr eg: 192.168.31.4
+- 1 LXC container for worker node **k3s-worker01** (2 vCPU, 2GB, 20GB Storage) - IP Addr eg: 192.168.31.5
 - Both containers running Ubuntu Server (tested on v26.04)
 - Basic Linux & Kubernetes knowledge
   
