@@ -1,5 +1,21 @@
 ## Kubernetes GitOps with K3s, ArgoCD and LXC container
 
+```
+kubernetes-gitops/
+├── root-application.yaml
+│
+├── infrastructure/
+│   ├── metallb/
+│   │   └── application.yaml
+│   └── longhorn/
+│       └── application.yaml
+│
+└── infrastructure-config/
+    └── metallb/
+        ├── application.yaml
+        ├── ipaddresspool.yaml
+        └── l2advertisement.yaml
+```
 
 ### Prerequisite
 - 1 LXC container for master node **k3s-master01** (2 vCPU, 4GB RAM, 20GB Storage)
