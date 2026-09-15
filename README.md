@@ -136,8 +136,6 @@ kubernetes-gitops/
 11. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
     After git push, ArgoCD will syncing.
 
-    🎉 $\color{red}{\text{You have implemented GitOps by using your git repo as source of truth}}$ 🎉
-
 > [!NOTE]
 > **Longhorn - Distributed Block Storage**
 >
