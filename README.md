@@ -267,7 +267,28 @@ k3s-worker01 systemd[1]: iscsid.service: Failed with result 'exit-code'.
     systemctl status iscsid --no-pager
     ```
 
-19. Create a test Persistant Volume Claim (PVC)
+19. Because we use 2 nodes only, but Longhorn default replica is 3 
+    ```
+    kubectl -n longhorn-system get settings.longhorn.io default-replica-count -o yaml
+    ```
+    ```
+    value: '{"v1":"3","v2":"3"}'
+    ```
+
+    Change to 2
+    ```
+    kubectl -n longhorn-system patch settings.longhorn.io default-replica-count \
+    --type=merge \
+    -p '{"value":"{\"v1\":\"2\",\"v2\":\"2\"}"}'
+    ```
+
+    Verify
+    ```
+    kubectl -n longhorn-system get settings.longhorn.io default-replica-count -o yaml
+    ```
+    
+
+21. Create a test Persistant Volume Claim (PVC)
 
     ```
     kubectl create -f - <<'EOF'
@@ -295,7 +316,7 @@ k3s-worker01 systemd[1]: iscsid.service: Failed with result 'exit-code'.
     STATUS   Bound
     ```
 
-21. Create a test pods
+22. Create a test pods
     ```
     kubectl create -f - <<'EOF'
     apiVersion: v1
