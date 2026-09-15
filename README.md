@@ -211,21 +211,6 @@ kubernetes-gitops/
 > **Longhorn - Distributed Block Storage**
 >
 
-> [!CAUTION]
-> <h1>LXC Container cannot run longhorn</h1>
-
-```
-k3s-master01 systemd[1]: Started iscsid.service - iSCSI initiator daemon (iscsid).
-k3s-master01 systemd[1]: iscsid.service: Main process exited, code=exited, status=255/EXCEPTION
-k3s-master01 iscsid[86694]: iSCSI daemon with pid=86695 started!
-k3s-master01 iscsid[86694]: sendmsg: bug? ctrl_fd 5
-k3s-master01 systemd[1]: iscsid.service: Failed with result 'exit-code'.
-
-k3s-worker01 systemd[1]: Started iscsid.service - iSCSI initiator daemon (iscsid).
-k3s-worker01 systemd[1]: iscsid.service: Main process exited, code=exited, status=255/EXCEPTION
-k3s-worker01 iscsid[59805]: sendmsg: bug? ctrl_fd 5
-k3s-worker01 systemd[1]: iscsid.service: Failed with result 'exit-code'.
-
 ```
 
 <details>
