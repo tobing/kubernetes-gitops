@@ -80,7 +80,8 @@ kubernetes-gitops/
    
       ```
 > [!NOTE]
-> **Prepare your own repo as source of ArgoCD to deploy apps, you can clone this repo to your github account**
+> **Prepare your own repo as source of ArgoCD to deploy apps, you can clone this repo to your github account.** <br>
+> **If you don't want to deploy Longhorn, remove longhorn from infrastructure directory**
 <details>
   <summary><h3>For Private Repo, You need to generate key</h3></summary>
    
@@ -128,11 +129,12 @@ kubernetes-gitops/
   
 </details>
   
-9. Create a temporary file [`root-application.yaml`](root-application.yaml) ⚠️ This file for ArgoCD initialization.<br/>
+9. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your local subnet.
+10. Create a temporary file [`root-application.yaml`](root-application.yaml) ⚠️ This file for ArgoCD initialization.<br/>
     Modify ```repoURL``` according to your git repo. $\color{red}{\text{CHECK CAREFULLY}}$ <br/>
     Run ```kubectl apply -f root-application.yaml```
 
-10. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your local subnet.
+
 11. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
     After git push, ArgoCD will syncing.
 
@@ -142,24 +144,7 @@ kubernetes-gitops/
 
 <details>
 
-12. In Proxmox host enable iSCSI module
-
-    ```
-    modprobe iscsi_tcp
-    
-    #check
-    lsmod | grep iscsi
-    ```
-
-    **PERMANENT**
-    
-    ```
-    echo iscsi_tcp | tee /etc/modules-load.d/iscsi.conf
-
-    #check
-    cat /etc/modules-load.d/iscsi.conf
-    ```  
-13. Install iSCSI in both ```k3s-master01``` and ```k3s-worker01```
+12. Install iSCSI in both ```k3s-master01``` and ```k3s-worker01```
 
     ```
     apt update
@@ -179,7 +164,7 @@ kubernetes-gitops/
     systemctl status iscsid --no-pager
     ```
 
-14. Because we use 2 nodes only, but Longhorn default replica is 3 
+13. Because we use 2 nodes only, but Longhorn default replica is 3 
     ```
     kubectl -n longhorn-system get settings.longhorn.io default-replica-count -o yaml
     ```
@@ -200,7 +185,7 @@ kubernetes-gitops/
     ```
     
 
-15. Create a test Persistant Volume Claim (PVC)
+14. Create a test Persistant Volume Claim (PVC)
 
     ```
     kubectl create -f - <<'EOF'
@@ -228,7 +213,7 @@ kubernetes-gitops/
     STATUS   Bound
     ```
 
-16. Create a test pods
+15. Create a test pods
     ```
     kubectl create -f - <<'EOF'
     apiVersion: v1
@@ -265,7 +250,7 @@ kubernetes-gitops/
     Longhorn works!
     ```
     
-17. Access Longhorn Web UI
+16. Access Longhorn Web UI
     
     From ```k3s-master01```
     ```
