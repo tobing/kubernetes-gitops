@@ -87,7 +87,9 @@ kubernetes-gitops/
 6. In ```k3s-master01```
    
     Install K3s master/control plane without servicelb. We will replace it with Metal LB<br>
-    ```curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable servicelb" sh -s - --write-kubeconfig-mode 644```
+    ```
+   curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable servicelb" sh -s - --write-kubeconfig-mode 644
+    ```
 
     Verify with
     ```
@@ -102,17 +104,21 @@ kubernetes-gitops/
    (Step 1: check Proxmox host loaded the modules) 
 
     Get K3s token for worker node installation<br>
-    ```cat /var/lib/rancher/k3s/server/node-token```
+    ```
+   cat /var/lib/rancher/k3s/server/node-token
+    ```
    
-7. In ```k3s-worker01```
+8. In ```k3s-worker01```
 
    Install K3s worker/agent<br>
-    ```curl -sfL https://get.k3s.io | K3S_URL=https://<mymasternode>:6443 K3S_TOKEN=<mymasternodetoken> sh -```
+    ```
+   curl -sfL https://get.k3s.io | K3S_URL=https://<mymasternode>:6443 K3S_TOKEN=<mymasternodetoken> sh -
+    ```
    
    ```<mymasternode>``` is k3s-master01 IP Address or hostname<br>
    ```<mymasternodetoken>``` is the token from step 1
    
-8. From ```k3s-master01``` install ArgoCD to the cluster
+10. From ```k3s-master01``` install ArgoCD to the cluster
 
      ```
      kubectl create namespace argocd     
@@ -129,7 +135,7 @@ kubernetes-gitops/
      kubectl port-forward svc/argocd-server -n argocd 8081:443
      ```
 
-9. From you computer
+11. From you computer
 
       Tunneling to ```k3s-master01_IP_ADDRESS``` with existing ```USERNAME```       
       ```
