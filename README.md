@@ -203,6 +203,24 @@ kubernetes-gitops/
 
 > [!NOTE]
 > **Longhorn - Distributed Block Storage**
+>
+
+> [!CAUTION]
+> <h1>LXC Container cannot run longhorn</h1>
+
+```
+k3s-master01 systemd[1]: Started iscsid.service - iSCSI initiator daemon (iscsid).
+k3s-master01 systemd[1]: iscsid.service: Main process exited, code=exited, status=255/EXCEPTION
+k3s-master01 iscsid[86694]: iSCSI daemon with pid=86695 started!
+k3s-master01 iscsid[86694]: sendmsg: bug? ctrl_fd 5
+k3s-master01 systemd[1]: iscsid.service: Failed with result 'exit-code'.
+
+k3s-worker01 systemd[1]: Started iscsid.service - iSCSI initiator daemon (iscsid).
+k3s-worker01 systemd[1]: iscsid.service: Main process exited, code=exited, status=255/EXCEPTION
+k3s-worker01 iscsid[59805]: sendmsg: bug? ctrl_fd 5
+k3s-worker01 systemd[1]: iscsid.service: Failed with result 'exit-code'.
+
+```
 
 <details>
 
@@ -228,6 +246,19 @@ kubernetes-gitops/
     ```
     apt update
     apt install -y open-iscsi
+    ```
+
+    Enable the services
+    
+    ```
+    sudo systemctl enable --now iscsid
+    sudo systemctl enable --now open-iscsi
+    ```
+
+    Check
+    ```
+    systemctl status iscsid.socket --no-pager
+    systemctl status iscsid --no-pager
     ```
 
 </details>
