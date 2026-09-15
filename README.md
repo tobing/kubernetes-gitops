@@ -22,7 +22,6 @@ kubernetes-gitops/
 - 1 VM for worker node **k3s-worker01** <br>
   (2 vCPU, +8GB RAM, +60GB Storage) - IP Addr 192.168.31.5 (set same as your local subnet)
 - Both running Ubuntu Server (tested on v26.04)
-
 ##
 
 1. In ```k3s-master01```
@@ -138,8 +137,6 @@ kubernetes-gitops/
     After git push, ArgoCD will syncing.
 
     🎉 $\color{red}{\text{You have implemented GitOps by using your git repo as source of truth}}$ 🎉
-
-<br><br>
 
 > [!NOTE]
 > **Longhorn - Distributed Block Storage**
