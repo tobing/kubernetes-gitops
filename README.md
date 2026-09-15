@@ -18,9 +18,9 @@ kubernetes-gitops/
 
 ### Environments
 - 1 VM for master node **k3s-master01** <br>
-  (2 vCPU, +8GB RAM, +50GB Storage) - IP Addr 192.168.31.4 (set same as your local subnet)
+  (2 vCPU, +8GB RAM, +50GB Storage) - IP Addr 192.168.31.4 (set according to your local subnet)
 - 1 VM for worker node **k3s-worker01** <br>
-  (2 vCPU, +8GB RAM, +50GB Storage) - IP Addr 192.168.31.5 (set same as your local subnet)
+  (2 vCPU, +8GB RAM, +50GB Storage) - IP Addr 192.168.31.5 (set according to your local subnet)
 - Both running Ubuntu Server (tested on v26.04)
 ##
 
@@ -53,6 +53,12 @@ kubernetes-gitops/
    
 3. From ```k3s-master01``` install ArgoCD to the cluster
 
+    Check status both nodes
+    ```
+    kubectl get nodes
+    ```
+
+   Create namespace and install ArgoCD
      ```
      kubectl create namespace argocd     
      kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
@@ -68,7 +74,7 @@ kubernetes-gitops/
      kubectl port-forward svc/argocd-server -n argocd 8081:443
      ```
 
-4. From you computer
+5. From you computer
 
       Tunneling to ```k3s-master01_IP_ADDRESS``` with existing ```USERNAME```       
       ```
@@ -83,7 +89,7 @@ kubernetes-gitops/
 > **Prepare your own repo as source of ArgoCD to deploy apps, you can clone this repo to your github account.** <br>
 > **If you don't want to deploy Longhorn, remove longhorn from infrastructure directory**
 <details>
-  <summary><h3>For Private Repo, You need to generate key</h3></summary>
+  <summary><h4>For Private Repo, you need to generate key for ArgoCD so it can access your repo</h4></summary>
    
 5. In ```k3s-master01``` create key for git repo
 
@@ -129,7 +135,7 @@ kubernetes-gitops/
   
 </details>
   
-9. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your local subnet.
+9. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> I am using ```192.168.31.240-192.168.31.250```. Set them based on your local subnet.
 10. Create a temporary file [`root-application.yaml`](root-application.yaml) ⚠️ This file for ArgoCD initialization.<br/>
     Modify ```repoURL``` according to your git repo. $\color{red}{\text{CHECK CAREFULLY}}$ <br/>
     Run ```kubectl apply -f root-application.yaml```
@@ -139,7 +145,7 @@ kubernetes-gitops/
     After git push, ArgoCD will syncing.
 
 > [!NOTE]
-> **Longhorn - Distributed Block Storage**
+> **Longhorn - Distributed Block Storage System for Kubernetes**
 >
 
 <details>
