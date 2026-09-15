@@ -18,9 +18,9 @@ kubernetes-gitops/
 
 ### Environments
 - 1 VM for master node **k3s-master01** <br>
-  (2 vCPU, +8GB RAM, +60GB Storage) - IP Addr 192.168.31.4 (set same as your local subnet)
+  (2 vCPU, +8GB RAM, +50GB Storage) - IP Addr 192.168.31.4 (set same as your local subnet)
 - 1 VM for worker node **k3s-worker01** <br>
-  (2 vCPU, +8GB RAM, +60GB Storage) - IP Addr 192.168.31.5 (set same as your local subnet)
+  (2 vCPU, +8GB RAM, +50GB Storage) - IP Addr 192.168.31.5 (set same as your local subnet)
 - Both running Ubuntu Server (tested on v26.04)
 ##
 
