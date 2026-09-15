@@ -168,7 +168,7 @@ kubernetes-gitops/
      We only want ArgoCD to **read** Git.<br/>
    
    
-12. From ```k3s-master01`` create secret:
+12. From ```k3s-master01``` create secret:
 
      ```
      kubectl create secret generic repo-kubernetes-gitops \
@@ -177,6 +177,7 @@ kubernetes-gitops/
      --from-literal=url=git@github.com:tobing/kubernetes-gitops.git \
      --from-file=sshPrivateKey=$HOME/.ssh/argocd-github
      ```
+     Modify```git@github.com:tobing/kubernetes-gitops.git``` to your git repo
   
 13. Then label it so ArgoCD recognizes it as a repository credential:
 
@@ -190,8 +191,7 @@ kubernetes-gitops/
   
 14. Create a temporary file [`root-application.yaml`](root-application.yaml) ⚠️ This file for ArgoCD initialization.<br/>
     Modify ```repoURL``` according to your git repo. $\color{red}{\text{CHECK CAREFULLY}}$ <br/>
-    Run ```kubectl apply -f root-application.yaml```<br/>
-
+    Run ```kubectl apply -f root-application.yaml```
 
 15. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> Set them based on your local subnet.
 16. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
@@ -222,28 +222,8 @@ kubernetes-gitops/
 
     #check
     cat /etc/modules-load.d/iscsi.conf
-    ```
-    
-
-18. Install helm chart binary & Longhorn from ```k3s-master01```
-
-    Get the lastest version of helm from ```https://github.com/helm/helm/releases```
-
-    ```
-    wget https://get.helm.sh/helm-vX.X.X-linux-386.tar.gz
-    tar -xzvf helm-vX.X.X-linux-386.tar.gz
-    cd linux-386
-    cp helm /usr/local/bin    
-    ```
-
-    Install Longhorn
-
-    ```
-    helm repo add longhorn https://charts.longhorn.io
-    helm repo update
-    ```
-
-19. Install iSCSI in both ```k3s-master01``` and ```k3s-worker01```
+    ```  
+18. Install iSCSI in both ```k3s-master01``` and ```k3s-worker01```
 
     ```
     apt update
