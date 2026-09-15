@@ -267,4 +267,71 @@ k3s-worker01 systemd[1]: iscsid.service: Failed with result 'exit-code'.
     systemctl status iscsid --no-pager
     ```
 
+19. Create a test Persistant Volume Claim (PVC)
+
+    ```
+    kubectl create -f - <<'EOF'
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: longhorn-test
+    spec:
+      storageClassName: longhorn
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 2Gi
+    EOF
+    ```
+
+    Check
+    ```
+    kubectl get pvc longhorn-test
+    ```
+
+    Result
+    ```
+    STATUS   Bound
+    ```
+
+21. Create a test pods
+    ```
+    kubectl create -f - <<'EOF'
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: longhorn-test
+    spec:
+      containers:
+        - name: test
+          image: busybox
+          command: ["sh", "-c", "echo 'Longhorn works!' > /data/test.txt && sleep 3600"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: longhorn-test
+    EOF
+    ```
+
+    Check if running
+    ```
+    kubectl get pod longhorn-test
+    ```
+
+    If running
+    ```
+    kubectl exec longhorn-test -- cat /data/test.txt
+    ```
+
+    Expected result
+    ```
+    Longhorn works!
+    ```
+    
+23. as
+
 </details>
