@@ -140,10 +140,18 @@ kubernetes-gitops/
 9. Check [`infrastructure-config/metallb/ipaddresspool.yaml`](infrastructure-config/metallb/ipaddresspool.yaml) for your Metal LB IP Address pool.<br> I am using ```192.168.31.240-192.168.31.250```. Set them based on your local subnet.
 10. Create a temporary file [`root-application.yaml`](root-application.yaml) ⚠️ This file for ArgoCD initialization.<br/>
     Modify ```repoURL``` according to your git repo. $\color{red}{\text{CHECK CAREFULLY}}$ <br/>
-    Run ```kubectl apply -f root-application.yaml```
 
+    Run ```kubectl apply -f root-application.yaml``` and check ArgoCD Web UI.
 
-11. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
+    After few minutes from ```k3s-master01``` check if all running and no issue
+    ```
+    kubectl get all -A
+    ```
+    $\color{red}{\text{If you did not remove longhorn from infrastructure directory in your github repo, you will deploy longhorn also}}$
+    $\color{red}{\text{Make sure to follow Longhorn instruction in the bottom}}$
+    <br>    
+
+12. Try to modify metallb version ```targetRevision: 0.16.1``` in [`infrastructure/metallb/application.yaml`](infrastructure/metallb/application.yaml) to something else like ```0.16.0```. <br>
     After git push, ArgoCD will syncing.
 
 > [!NOTE]
