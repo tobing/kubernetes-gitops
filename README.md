@@ -281,4 +281,14 @@ kubernetes-gitops/
     ```
     http://127.0.0.1:8090
 
+17. Troubleshooting "Degraded" volume because step 13
+    ```
+    kubectl -n longhorn-system get volume
+    ```
+    ```
+    kubectl -n longhorn-system get volumes.longhorn.io <pvc-id> -o jsonpath='{.spec.numberOfReplicas}{"\n"}'
+    ```
+    ```
+    kubectl -n longhorn-system patch volumes.longhorn.io <pvc-id> --type=merge -p '{"spec":{"numberOfReplicas":2}}'
+    ```
 </details>
