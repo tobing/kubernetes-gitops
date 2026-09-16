@@ -277,7 +277,7 @@ kubernetes-gitops/
     ```
     ssh -L 8090:127.0.0.1:8090 USERNAME@k3s-master01_IP_ADDRESS
     ```
-    Access ArgoCD Web UI from web browser
+    Access Longhorn Web UI from web browser
     ```
     http://127.0.0.1:8090
 
