@@ -93,7 +93,7 @@ kubernetes-gitops/
 <details>
   <summary><h4>For Private Repo, you need to generate key for ArgoCD so it can access your repo</h4></summary>
    
-5. In ```k3s-master01``` create key for git repo
+5. In ```k3s-master01``` create key for git repo. **Skip passphrase** (leave it empty)
 
      ```
      ssh-keygen -t ed25519 -f ~/.ssh/argocd-github -C "argocd-kubernetes-gitops"
