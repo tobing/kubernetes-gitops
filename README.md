@@ -160,8 +160,8 @@ kubernetes-gitops/
     Enable the services
     
     ```
-    sudo systemctl enable --now iscsid
-    sudo systemctl enable --now open-iscsi
+    systemctl enable --now iscsid
+    systemctl enable --now open-iscsi
     ```
 
     Check
