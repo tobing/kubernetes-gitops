@@ -1,5 +1,18 @@
 ## Kubernetes GitOps with K3s, ArgoCD and Proxmox VM
 
+A hands-on Kubernetes homelab built with K3s running on Proxmox VMs and managed using a GitOps workflow with ArgoCD.
+
+The repository contains Kubernetes manifests and infrastructure configuration for deploying and managing the cluster declaratively, including:
+
+**- K3s** — Lightweight Kubernetes distribution  
+**- Proxmox VE** — Virtualization platform hosting the Kubernetes nodes  
+**- ArgoCD** — GitOps-based continuous delivery  
+**- Longhorn** — Distributed persistent storage  
+**- MetalLB** — LoadBalancer implementation for the bare-metal cluster  
+**- GitHub** — Source of truth for Kubernetes configuration  
+
+The goal is to build a practical Kubernetes environment while learning and documenting cluster operations, GitOps, networking, storage, and workload deployment.
+
 ```
 kubernetes-gitops/
 ├── root-application.yaml
@@ -21,7 +34,7 @@ kubernetes-gitops/
   (2 vCPU, +8GB RAM, +50GB Storage) - IP Addr 192.168.31.4 (set according to your local subnet)
 - 1 VM for worker node **k3s-worker01** <br>
   (2 vCPU, +8GB RAM, +50GB Storage) - IP Addr 192.168.31.5 (set according to your local subnet)
-- Both running Ubuntu Server (tested on v26.04)
+- Tested on Debian 13 and Ubuntu 26.04 server
 ##
 
 1. In ```k3s-master01```
