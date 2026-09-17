@@ -23,7 +23,7 @@ kubernetes-gitops/
   (2 vCPU, 2GB, no swap, 25GB Storage) - IP Addr 192.168.31.5 (set same as your local subnet)
 - Both containers running Debin/Ubuntu Server (tested Debian 13 & Ubuntu 26.04)
   
-🎈 LXC Container encountered error with iscsi, Loghorn cannot run on LXC container.
+🎈 $\color{red}{\text{LXC Container encountered error with iscsi, Loghorn cannot run on LXC container.}}$
 ##
 
 
@@ -210,8 +210,6 @@ kubernetes-gitops/
 > [!NOTE]
 > **Longhorn - Distributed Block Storage (LXC Container issue with iscsi)**
 >
-
-```
 
 <details>
 
