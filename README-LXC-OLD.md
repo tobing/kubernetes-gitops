@@ -280,6 +280,23 @@ kubernetes-gitops/
     - Skip Nodes (optional)
     - Skip Mount option (optional)
     - Check Proxmox web ui, new ```nfs-vmdata'``` has been provisioned
+    - From shell, check
+      ```
+      pvesm scan nfs <promox host ip>
+      # Expected result
+      # /srv/proxmox-nfs 192.168.31.0/24
+
+      cat /etc/pve/storage.cfg
+      # Expected result
+      # nfs: nfs-vmdata
+      #   export /srv/proxmox-nfs
+      #   path /mnt/pve/nfs-vmdata
+      #   server 192.168.31.100
+      #   content images,rootdir
+
+      ```
+      
+    - 
     
 22. On Progress ....
 
