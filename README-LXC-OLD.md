@@ -253,3 +253,36 @@ kubernetes-gitops/
     
 
 </details>
+
+> [!NOTE]
+> **NFS Storage**
+>
+
+<details>
+    
+19. If you don't have NFS server yet, you can setup in the Proxmox host <br>
+    [`https://community-scripts.org/docs/tools/pve/storage-share-helper`](https://community-scripts.org/docs/tools/pve/storage-share-helper)
+        
+    Check the quick start script like this 
+    ```
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/tools/pve/storage-share-helper.sh)"
+    ```
+    Run in it Proxmox host, **Proceed**
+    - select action ``` Write  | Host: install NFS server + create export```
+    - Select path for NFS ``` /srv/proxmox-nfs``` (default)
+    - Allow your Subnet/CIDR to access this NFS eg ```192.168.31.0/24```
+    - Export option ```rw,sync,no_subtree_check,no_root_squash``` (default)
+    - Back to main menu select ```Write  | Proxmox: add NFS storage```
+    - Set storage id ```nfs-vmdata```
+    - Set NFS server IP ```your proxmox host IP```
+    - Set export path ```/srv/proxmox-nfs```
+    - Set content types ```images,rootdir``` (default)
+    - Skip Nodes (optional)
+    - Skip Mount option (optional)
+    - Check Proxmox web ui, new ```nfs-vmdata'``` has been provisioned
+    
+22. On Progress ....
+
+
+</details
+
