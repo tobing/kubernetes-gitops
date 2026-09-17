@@ -5,9 +5,7 @@ kubernetes-gitops/
 ├── root-application.yaml
 │
 ├── infrastructure/
-│   ├── metallb/
-│   │   └── application.yaml
-│   └── longhorn/
+│   └── metallb/
 │       └── application.yaml
 │
 └── infrastructure-config/
@@ -23,7 +21,8 @@ kubernetes-gitops/
   (2 vCPU, 2GB, no swap, 25GB Storage) - IP Addr 192.168.31.5 (set same as your local subnet)
 - Both containers running Debin/Ubuntu Server (tested Debian 13 & Ubuntu 26.04)
   
-🎈 $\color{red}{\text{LXC Container encountered error with iscsi, Loghorn cannot run on LXC container.}}$
+🎈 $\color{red}{\text{LXC Container encountered error with iscsi, Loghorn cannot run on LXC container.}}$ <br> 🎈 $\color{red}{\text{!! Remove longhorn from infrastructure directory !!}}$
+
 ##
 
 
