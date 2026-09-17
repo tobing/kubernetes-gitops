@@ -278,8 +278,12 @@ kubernetes-gitops/
     ```
     Longhorn works!
     ```
+    To delete the pod
+    ```
+    kubectl delete pod longhorn-test
+    ```
     
-16. Access Longhorn Web UI
+17. Access Longhorn Web UI
     
     From ```k3s-master01```
     ```
@@ -294,7 +298,7 @@ kubernetes-gitops/
     ```
     http://127.0.0.1:8090
 
-17. Troubleshooting "Degraded" volume because step 13
+18. Troubleshooting "Degraded" volume because step 13
     ```
     kubectl -n longhorn-system get volume
     ```
