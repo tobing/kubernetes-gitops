@@ -70,7 +70,7 @@ kubernetes-gitops/
    Then run
     ```
     mkdir -p ~/.kube
-    mv /etc/rancher/k3s/k3s.yaml ~/.kube/config
+    mv k3s.yaml ~/.kube/config
     chmod 600 ~/.kube/config
     ```
    
