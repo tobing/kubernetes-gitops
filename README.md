@@ -53,12 +53,7 @@ kubernetes-gitops/
     ```
    cat /var/lib/rancher/k3s/server/node-token
     ```
-    For each user you want to run ```kubectl```
-    ```
-    mkdir -p ~/.kube
-    ln -s /etc/rancher/k3s/k3s.yaml ~/.kube/config
-    chmod 600 ~/.kube/config
-    ```
+    
    
 3. In ```k3s-worker01```
 
@@ -69,8 +64,17 @@ kubernetes-gitops/
    
    ```<mymasternode>``` is k3s-master01 IP Address or hostname<br>
    ```<mymasternodetoken>``` is the token from step 1
+
+   If you want to run ```kubectl``` in worker node, copy ```/etc/rancher/k3s/k3s.yaml``` from master node.<br>
+   Modify  ```server: https://127.0.0.1:6443``` to ``` server: https://<MASTER_NODE_IP>:6443```<br>
+   Then run
+    ```
+    mkdir -p ~/.kube
+    mv /etc/rancher/k3s/k3s.yaml ~/.kube/config
+    chmod 600 ~/.kube/config
+    ```
    
-4. From ```k3s-master01``` install ArgoCD to the cluster
+5. From ```k3s-master01``` install ArgoCD to the cluster
 
     Check status both nodes
     ```
@@ -95,7 +99,7 @@ kubernetes-gitops/
      kubectl port-forward svc/argocd-server -n argocd 8081:443
      ```
 
-5. From you computer
+6. From you computer
 
       Tunneling to ```k3s-master01_IP_ADDRESS``` with existing ```USERNAME```       
       ```
