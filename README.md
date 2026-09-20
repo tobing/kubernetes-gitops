@@ -53,8 +53,14 @@ kubernetes-gitops/
     ```
    cat /var/lib/rancher/k3s/server/node-token
     ```
+    For each user you want to run ```kubectl```
+    ```
+    mkdir -p ~/.kube
+    ln -s /etc/rancher/k3s/k3s.yaml ~/.kube/config
+    chmod 600 ~/.kube/config
+    ```
    
-2. In ```k3s-worker01```
+3. In ```k3s-worker01```
 
    Install K3s worker/agent<br>
     ```
@@ -64,7 +70,7 @@ kubernetes-gitops/
    ```<mymasternode>``` is k3s-master01 IP Address or hostname<br>
    ```<mymasternodetoken>``` is the token from step 1
    
-3. From ```k3s-master01``` install ArgoCD to the cluster
+4. From ```k3s-master01``` install ArgoCD to the cluster
 
     Check status both nodes
     ```
